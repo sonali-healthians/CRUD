@@ -1,0 +1,29 @@
+ function fileUpload($fileData){
+        $config             =   array(
+            'upload_path'   =>  "/var/www/html/sites/uploads/",
+            'allowed_types' =>  "gif|jpg|png|jpeg|pdf",
+            'overwrite'     =>  TRUE,
+            'max_size'      =>  "2048000",
+        );
+        
+        $this->load->library('upload', $config);
+        $upload_status = $this->upload->do_upload('image_path');
+        
+        if(!$upload_status) {
+            $data = array(
+                'status'    =>  false, 
+                'message'   =>  $this->upload->display_errors()
+            );
+
+            return $data;
+        }
+        else {
+            $data           =   array(
+                'status'    =>  true, 
+                'message'   =>  "Successfuly upload ...",
+                'path'      =>  $this->upload->data()
+            );
+
+            return $data;
+        }
+    }
